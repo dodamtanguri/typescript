@@ -1,49 +1,17 @@
-// const person: {
-//     name : string,
-//     age : number
-// } = {
-//  const person :{
-//     name : string,
-//     age: number,
-//     hobbies : string[],
-//     //Tuple : 타입스크립트에 정확히 두 개의 요소가 있는 특별한 배열
-//     role : [number,string] 
-//  } ={
-//     name : "sohee",
-//     age :30,
-//     hobbies : ['Sports', 'Cooking'],
-//     role :[2, 'author'],
-// };
-//Tuple에서 허용되는 일종의 예외, 타입스크립트가 이 오류를 잡지 못함. 
-//person.role.push('admin');
-//person.role[1] = 10;
+//유니언타입
+function combine(input1: number | string, input2: number | string ) {
+let result;
+    if(typeof input1 == 'number' && typeof input2 == 'number') {
+        result = input1 + input2;
+    } else {
+        result = input1.toString() + input2.toString();
+    }
+      return result;
+     }
 
-//person.role = [0, 'admin', 'user'];
+const combinedAges = combine(30, 26);
 
+console.log(combinedAges);
 
-enum Role {
-    ADMIN, READ_ONLY, AUTHOR
-};
-
-const person = {
-    name : "sohee",
-    age :30,
-    hobbies : ['Sports', 'Cooking'],
-    role : Role.ADMIN,
-};
-
-let favoriteActivities: string[];
-
-favoriteActivities = ["Sports"];
-
-
-console.log(person.name);
-
-for(const hobby of person.hobbies) {
-    console.log(hobby.toUpperCase());
-    
-}
-
-if(person.role == Role.ADMIN) {
-    console.log('is admin')
-}
+const combineNames = combine('Max', 'Anna');
+console.log(combineNames);
