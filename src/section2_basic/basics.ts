@@ -5,9 +5,10 @@ function add1(n1: number, n2: number, showResult: boolean, phrase : string) {
   const result = n1 + n2;
    if(showResult) {
     console.log(phrase + result);
-   } else {
-    return result;
    }
+    return result;
+   
+
 
   }
   
@@ -17,3 +18,4 @@ function add1(n1: number, n2: number, showResult: boolean, phrase : string) {
   const printResult1 = true;
   const resultPhrase1 = "Result is: "
  add1(number1, number2, printResult1, resultPhrase1);
+console.log(resultPhrase1 + add1);
