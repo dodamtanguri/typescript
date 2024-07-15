@@ -1,4 +1,4 @@
-const addArrow = (a:number, b:number) => a+b;
+const addArrow = (a:number, b:number = 1) => a+b;
 
 console.log(addArrow(2,5));
 
@@ -10,4 +10,4 @@ if(button) {
     button.addEventListener('click', event =>console.log(event));
 }
 
-printOutput(addArrow(5,2));
+printOutput(addArrow(5));
