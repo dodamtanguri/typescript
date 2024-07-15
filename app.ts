@@ -6,4 +6,4 @@ function printResult( num : number):void {
     console.log('Result : ' + num);
 }
 
-printResult(add(5,12));
+printResult(add(5,12));  
