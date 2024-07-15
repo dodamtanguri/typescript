@@ -1,4 +1,4 @@
-const button = document.querySelector('button')!;
+//const button = document.querySelector('button')!;
 
 
 function clickHandler(message: string) {
@@ -6,8 +6,8 @@ function clickHandler(message: string) {
     
 }
 
-if(button) {
-    button.addEventListener('click', clickHandler.bind(null,'You;re welcome!'));
-}
+// if(button) {
+//     button.addEventListener('click', clickHandler.bind(null,'You;re welcome!'));
+// }
 
 
