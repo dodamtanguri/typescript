@@ -1,7 +1,9 @@
 class Department {
     // name: string;
     //접근제어자 private : 클래스 내에서만 접근 가능.
-    private employees: string [] = [];
+    //private employees: string [] = [];
+    //접근제어자 protected : private와 유사, 상속받은 클래스에서도 접근 가능 
+    protected employees: string [] = [];
     //생성하는 객체의 초기화 작업
     //기존 필드를 정의한 다음 값을 할당했던 두차례의 초기화 코드 대신에 
     //생성자를 간단하게 정의 할 수 있음. >> 한번에 정의하고 할당하는게 가능함. 
@@ -40,6 +42,14 @@ class ITDepartment extends Department{
 class AccountingDepartment extends Department {
     constructor(id: string, private reports: string[]) {
         super(id, "AccountingDepartment");
+    }
+    //외부에서 프로퍼티를 수정할 수 없도록 유지하면서 엑세스 권한을 부여하려면 protected로 바꾸기
+    addEmployee(name: string): void {
+        if(name === 'MAX') {
+            return;
+        }
+        //기본클래스의 employees의 접근제어자를 protected로 변경.
+        this.employees.push(name);
     }
     addReport(text: string){
         this.reports.push(text);
@@ -91,7 +101,7 @@ console.log(it);
 console.log('-------------------------------------------------');
 
 const account = new AccountingDepartment('d2',[]);
-
+account.addEmployee('MAX');
 account.addEmployee('회계직원1');
 account.addEmployee('회계직원2');
 
