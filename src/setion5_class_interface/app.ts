@@ -1,14 +1,17 @@
 class Department {
-    name: string;
+    // name: string;
     //접근제어자 private : 클래스 내에서만 접근 가능.
     private employees: string [] = [];
     //생성하는 객체의 초기화 작업
-    constructor(n: string) {
-        this.name = n;
+    //기존 필드를 정의한 다음 값을 할당했던 두차례의 초기화 코드 대신에 
+    //생성자를 간단하게 정의 할 수 있음. >> 한번에 정의하고 할당하는게 가능함. 
+    constructor( private id: string, public name: string) {
+        // this.name = n;
     }
 //this 키워드가 항상 Department 클래스의 객체를 참조하게 됨. 
     describe(this: Department) {
-        console.log('Department : ' + this.name);
+        console.log(`Department : [${this.id}] : ${this.name}`);
+        
         
     }
 
@@ -24,7 +27,7 @@ class Department {
     }
 }
 
-const accounting = new   Department('Accounting');
+const accounting = new   Department( 'id1', 'Accounting');
 
 accounting.addEmployee('sohee');
 accounting.addEmployee('dodam');
