@@ -3,6 +3,10 @@ class Department {
     //접근제어자 private : 클래스 내에서만 접근 가능.
     //private employees: string [] = [];
     //접근제어자 protected : private와 유사, 상속받은 클래스에서도 접근 가능 
+
+    //------------------------------------------------
+    static fiscalYear = 2020;
+
     protected employees: string [] = [];
     //생성하는 객체의 초기화 작업
     //기존 필드를 정의한 다음 값을 할당했던 두차례의 초기화 코드 대신에 
@@ -10,8 +14,18 @@ class Department {
 
     //readonly >> 읽기 전용 변경되면 안됨. 한 번 설정되면 변경되지 않아야할 프로퍼티를 안전하게 보호 (자바스크립트 지원 X)
     constructor( private readonly id: string, public name: string) {
-        // this.name = n;
+    // this.name = n;
+    
+    //Property 'fiscalYear' does not exist on type 'Department'. Did you mean to access the static member 'Department.fiscalYear' instead?
+    //console.log(this.fiscalYear);
+    //생성자는 static으로 정의할 수 없음.
+    console.log(Department.fiscalYear);
     }
+    static createEmployee(name: string) {
+        return {name:name};
+    }
+
+
     //this 키워드가 항상 Department 클래스의 객체를 참조하게 됨. 
     describe(this: Department) {
         console.log(`Department : [${this.id}] : ${this.name}`);       
@@ -101,11 +115,23 @@ accounting.describe();
 //describe 프로퍼티가 accounting 객체 describe 메서드를 참조하는 포인터 
 // const accountingCopy = {name : 'sohee', describe: accounting.describe};
 // accountingCopy.describe();
+console.log('-----------------------static--------------------');
+
+//new 키워드를 사용해 인스턴스화 하지않고 클래스에서 직접호출.
+//클래스 이름으로 정적메소드와 프로퍼티를 묶을 수 있음. 
+const employee1 = Department.createEmployee('Max');
+
+console.log(employee1);
+console.log(employee1, Department.fiscalYear);
 
 console.log('-------------------------------------------------');
 
 
+
 const it = new ITDepartment('d1', ['MAX']);
+//Math 클래스의 인스턴스로 액세스하는 메서드나 프로퍼티가 아니므로 new 연산자를 사용해서 인스턴스를 생성할 필요 ❌
+//new Math.pow();
+Math.PI;
 
 it.addEmployee('MAX');
 it.addEmployee('MAUN');
