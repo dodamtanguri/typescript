@@ -40,8 +40,26 @@ class ITDepartment extends Department{
 }
 
 class AccountingDepartment extends Department {
+
+    private lastReport: string;
+
+    get mostRecentReport() {
+        if(this.lastReport) {
+            return this.lastReport;
+        }
+        throw new Error('No report found.');
+    }
+
+    set mostRecentReport(value: string) {
+        if(!value) {
+            throw new Error('Please pass in a valid value!');
+        }
+        this.addReport(value);
+    }
+
     constructor(id: string, private reports: string[]) {
         super(id, "AccountingDepartment");
+        this.lastReport = reports[0];
     }
     //외부에서 프로퍼티를 수정할 수 없도록 유지하면서 엑세스 권한을 부여하려면 protected로 바꾸기
     addEmployee(name: string): void {
@@ -53,6 +71,7 @@ class AccountingDepartment extends Department {
     }
     addReport(text: string){
         this.reports.push(text);
+        this.lastReport = text;
     }
     printReport(){
         console.log(this.reports);
@@ -101,6 +120,11 @@ console.log(it);
 console.log('-------------------------------------------------');
 
 const account = new AccountingDepartment('d2',[]);
+
+// console.log(account.mostRecentReport);
+//>> Expect : Error: No report found.
+
+account.mostRecentReport = 'setter를 배워봅시다';
 account.addEmployee('MAX');
 account.addEmployee('회계직원1');
 account.addEmployee('회계직원2');
@@ -108,6 +132,9 @@ account.addEmployee('회계직원2');
 account.describe();
 
 account.addReport('리포트 제출합니다');
+
+console.log(account.mostRecentReport);
+
 account.printReport();
 account.printEmployeeInformation();
 
