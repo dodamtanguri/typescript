@@ -13,7 +13,7 @@
 // printOutput(addArrow(5));
 
 
-const hobbies = ['Sports', 'Cooking'];
+const hobbies = ['Sports', 'Hiking','Cooking'];
 
 const activeHobbies = ['Hiking', ...hobbies];
 
@@ -22,7 +22,7 @@ activeHobbies.push(...hobbies);
 console.log(activeHobbies);
 
 const person2 = {
-    name : 'Max',
+    firstName : 'Max',
     age : 30,
 }
 
@@ -38,4 +38,14 @@ console.log(copiedPerson);
 
  const addedNumbers = addArrow(5,10,2);
  console.log(addedNumbers);
+
+ const [hobby1, hobby2, ...remainingHobbies] = hobbies; 
+
+ console.log(hobby1,  ...remainingHobbies);
  
+
+ const {firstName : userName2, age} = person2;
+
+ 
+console.log(userName2, age );
+
