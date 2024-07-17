@@ -1,4 +1,5 @@
-class Department {
+
+abstract class Department {
     // name: string;
     //접근제어자 private : 클래스 내에서만 접근 가능.
     //private employees: string [] = [];
@@ -13,7 +14,8 @@ class Department {
     //생성자를 간단하게 정의 할 수 있음. >> 한번에 정의하고 할당하는게 가능함. 
 
     //readonly >> 읽기 전용 변경되면 안됨. 한 번 설정되면 변경되지 않아야할 프로퍼티를 안전하게 보호 (자바스크립트 지원 X)
-    constructor( private readonly id: string, public name: string) {
+    //  constructor( private readonly id: string, public name: string)
+    constructor( protected id: string, public name: string) {
     // this.name = n;
     
     //Property 'fiscalYear' does not exist on type 'Department'. Did you mean to access the static member 'Department.fiscalYear' instead?
@@ -27,9 +29,13 @@ class Department {
 
 
     //this 키워드가 항상 Department 클래스의 객체를 참조하게 됨. 
-    describe(this: Department) {
-        console.log(`Department : [${this.id}] : ${this.name}`);       
-    }
+    // describe(this: Department) {
+    //     console.log(`Department : [${this.id}] : ${this.name}`);       
+    // }
+    //모든 서브클래스가 해당 메소드 구현을 강제하게 하려면 abstract
+   abstract describe(this: Department) : void;
+
+
 
     addEmployee(employee: string) {
         this.employees.push(employee);
@@ -51,12 +57,16 @@ class ITDepartment extends Department{
         this.admins = admins;
     }
 
+    describe()  {
+        console.log('IT Department - ID :' + this.id);
+    }
+
 }
 
 class AccountingDepartment extends Department {
 
     private lastReport: string;
-
+    private static instance: AccountingDepartment;
     get mostRecentReport() {
         if(this.lastReport) {
             return this.lastReport;
@@ -71,10 +81,19 @@ class AccountingDepartment extends Department {
         this.addReport(value);
     }
 
-    constructor(id: string, private reports: string[]) {
+   private constructor(id: string, private reports: string[]) {
         super(id, "AccountingDepartment");
         this.lastReport = reports[0];
     }
+    //싱글톤 패턴을 위해 
+    static getInstance() {
+        if(AccountingDepartment.instance) {
+            return this.instance;
+        }
+        this.instance = new AccountingDepartment('d2', []);
+        return this.instance;
+    }
+
     //외부에서 프로퍼티를 수정할 수 없도록 유지하면서 엑세스 권한을 부여하려면 protected로 바꾸기
     addEmployee(name: string): void {
         if(name === 'MAX') {
@@ -91,25 +110,30 @@ class AccountingDepartment extends Department {
         console.log(this.reports);
         
     }
+
+    describe()  {
+        console.log('Accounting Department - ID :' + this.id);
+    }
+
 }
 
-const accounting = new Department( 'id1', 'Accounting');
+// const accounting = new Department( 'id1', 'Accounting');
 
 
-accounting.addEmployee('sohee');
-accounting.addEmployee('dodam');
+// accounting.addEmployee('sohee');
+// accounting.addEmployee('dodam');
 
-accounting.name = 'public 접근제어자';
+// accounting.name = 'public 접근제어자';
 
 //private 프로퍼티인 employees를 Department 클래스 안에서만 액세스할 수 있음. 
 //accounting.employees[2] = 'Anna';
 
-accounting.describe();
-accounting.printEmployeeInformation();
+// accounting.describe();
+// accounting.printEmployeeInformation();
 
-console.log(accounting);
+// console.log(accounting);
 
-accounting.describe();
+// accounting.describe();
 //객체 리터럴로 생성되는 객체에 describe 프로퍼티를 추가했기 때문. 
 //미리 정의된 클래스를 기반으로 생성되는 객체 ❌ >> 더미객체일뿐 
 //describe 프로퍼티가 accounting 객체 describe 메서드를 참조하는 포인터 
@@ -144,8 +168,10 @@ it.printEmployeeInformation();
 console.log(it);
 
 console.log('-------------------------------------------------');
-
-const account = new AccountingDepartment('d2',[]);
+//
+const account = AccountingDepartment.getInstance();
+const account2 = AccountingDepartment.getInstance();
+console.log(account, account2);
 
 // console.log(account.mostRecentReport);
 //>> Expect : Error: No report found.
